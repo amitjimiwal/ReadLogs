@@ -1,7 +1,7 @@
 {
   "name": "react-ts-jest-template",
   "version": "1.0.0",
-  "private":true,
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "appwrite": "^13.0.1",
     "jest-environment-jsdom": "^29.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
