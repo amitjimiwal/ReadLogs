@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import authService from "./appwrite/authService";
-import dbService from "./appwrite/dbService";
-import { ID } from "appwrite";
+
 
 function App() {
   useEffect(() => {
