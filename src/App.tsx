@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import { Outlet } from "react-router-dom";
+import Header from "./components/ui/Header";
 
 function App() {
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
   return (
-    <div className="bg-black h-screen w-full flex justify-center items-center text-white">
-      {/* <h1 className="text-3xl text-white">ReadLogs</h1> */}
-      <Outlet />
+    <div className="min-h-screen w-full dark">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 }

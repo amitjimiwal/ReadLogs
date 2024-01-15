@@ -9,6 +9,7 @@ import ReadScreen from "./pages/ReadScreen.tsx";
 import Protected from "./components/Protected.tsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.ts";
+import Home from "./pages/Home.tsx";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Home</h1>,
+        element: <Home/>,
       },
       {
         path: "/login",
