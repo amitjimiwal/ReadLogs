@@ -17,9 +17,8 @@ const Home = () => {
           A simple and easy to use reading tracker
         </h2>
         <div className="flex gap-5 items-center">
-          <Button variant={"secondary"} size={"lg"}>
-            {" "}
-            Star On Github{" "}
+          <Button variant={"link"} size={"lg"}>
+            <a href="https://github.com/amitjimiwal/ReadLogs"> Star On Github </a>
           </Button>
           <Button
             onClick={() => {
