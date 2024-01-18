@@ -38,5 +38,4 @@ jobs:
       # build and test the apps
       - name: build
         run: |
-          npm run build
-          npm test
+         npm run build

@@ -4,7 +4,7 @@ import { MoveRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AuthState } from "@/redux/store/store";
-import Logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 const Header = () => {
   const authStatus = useSelector((state: AuthState) => state.auth.status);
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ const Header = () => {
         }}
       >
         <img
-          src={Logo}
-          alt="ReadLogs Logo"
+          src={logo}
+          alt="ReadLogs logo"
           className="w-14 rounded-full shadow-md"
         />
       </div>

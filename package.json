@@ -52,6 +52,7 @@
     "vite": "^4.4.5"
   },
   "jest": {
+    "verbose": true,
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "<rootDir>/jest-setup.ts"
