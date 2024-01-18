@@ -1,16 +1,35 @@
+import authService from "@/appwrite/authService";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/button";
+import { login } from "@/redux/slices/authSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 type LoginFiels = {
   email: string;
   password: string;
 }
 const LoginScreen = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<LoginFiels>();
-  const loginHandler: SubmitHandler<LoginFiels> = (data: LoginFiels) => {
-    console.log(data);
+  const loginHandler: SubmitHandler<LoginFiels> = async (data: LoginFiels) => {
+    try {
+      const session = await authService.login(data);
+      if (session) {
+        authService.getCurrentUser().then(userData => {
+          if (userData) {
+            dispatch(login({ userData }));
+            navigate("/reads");
+          }
+        })
+      }
+    } catch (error) {
+      console.log("Login page error");
+      console.log(error);
+    }
   };
+
   return (
     <section className='w-full text-center h-[90vh] bg-gradient-to-t from-gray-700 via-gray-900 to-black flex flex-col justify-center items-center '>
       <form onSubmit={handleSubmit(loginHandler)} className='p-4 shadow-xl border-gray-700 rounded-xl'>
