@@ -1,7 +1,6 @@
 {
-  "name": "react-ts-jest-template",
-  "version": "1.0.0",
-  "private": true,
+  "name": "Read-Logs",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginScreen from "./pages/LoginScreen.tsx";
-import SignUpScreen from "./pages/SignUpScreen.tsx";
+import SignUpScreen from './pages/SignUpScreen.tsx';
 import ReadScreen from "./pages/ReadScreen.tsx";
 import Protected from "./components/Protected.tsx";
 import { Provider } from "react-redux";
@@ -18,29 +18,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home/>,
+        element: <Home />,
       },
       {
         path: "/login",
-        element:(
+        element: (
           <Protected authentication={false}>
-            <LoginScreen/>
+            <LoginScreen />
           </Protected>
         ),
       },
       {
         path: "/signup",
-        element:(
+        element: (
           <Protected authentication={false}>
-            <SignUpScreen/>
+            <SignUpScreen />
           </Protected>
         ),
       },
       {
-        path:"/reads",
-        element:(
+        path: "/reads",
+        element: (
           <Protected authentication={true}>
-            <ReadScreen/>
+            <ReadScreen />
           </Protected>),
       }
     ],
