@@ -1,9 +1,10 @@
+import SecondaryNav from '@/components/SecondaryNav'
 import React from 'react'
 
-const ReadScreen :React.FC = () => {
+const ReadScreen: React.FC = () => {
   return (
     <div>
-      Read Screen
+      <SecondaryNav />
     </div>
   )
 }
