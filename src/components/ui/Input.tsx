@@ -7,6 +7,7 @@ interface InputProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props?: any;
 }
+
 const Input = forwardRef(function Input(
   { type = "text", label, className, placeholder, ...props }: InputProps,
   ref: React.Ref<HTMLInputElement>
@@ -15,7 +16,7 @@ const Input = forwardRef(function Input(
   return (
     <div className="w-auto p-2 mb-3 text-left">
       {label && (
-        <label className="text-[#FAF3DD] block mr-3 text-lg font-medium" htmlFor={id}>
+        <label className="text-[#ebc855] block mr-3 text-lg font-medium" htmlFor={id}>
           {label}
         </label>
       )}

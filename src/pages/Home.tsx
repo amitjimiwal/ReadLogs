@@ -16,9 +16,12 @@ const Home = () => {
         <h2 className="text-3xl sm:text-3xl text-center text-[#FAF3DD] font-medium">
           A simple and easy to use reading tracker
         </h2>
-        <div className="flex gap-5 items-center">
+        <div className="flex gap-5 items-center flex-wrap justify-center">
           <Button variant={"link"} size={"lg"}>
-            <a href="https://github.com/amitjimiwal/ReadLogs"> Star On Github </a>
+            <a href="https://github.com/amitjimiwal/ReadLogs">
+              {" "}
+              Star On Github{" "}
+            </a>
           </Button>
           <Button
             onClick={() => {

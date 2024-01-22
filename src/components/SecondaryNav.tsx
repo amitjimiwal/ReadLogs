@@ -1,34 +1,62 @@
-import React from 'react'
-import { Button } from './ui/button'
+import React, { useRef } from "react";
+import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-const SecondaryNav = () => {
+} from "@/components/ui/dialog";
+import Input from "./ui/Input";
+import { SOCIALS } from "@/utils/constants/socials";
+import Select from "./ui/Select";
+import { Category } from "@/utils/constants/type";
+interface Props {
+  type: Category.READS | Category.SOCIALS;
+}
+const SecondaryNav: React.FC<Props> = ({ type }) => {
+  const urlRef = useRef<HTMLInputElement>(null);
   return (
-    <div className='w-full bg-black p-4 flex items-center justify-between'>
-      <div className='text-white'>
-        Your Socials
-      </div>
+    <div className="w-full bg-[#2A272A] p-4 flex items-center justify-between">
+      <div className="text-white">Your {type}</div>
       <div>
         <Dialog>
           <DialogTrigger>
-            <Button variant={"secondary"}>
-              Add +
-            </Button>
+            <Button>Add +</Button>
           </DialogTrigger>
           <DialogContent>
-            Hello sir
+            <DialogHeader>
+              <DialogTitle>Add Your {type}</DialogTitle>
+            </DialogHeader>
+            <form>
+              {type === Category.SOCIALS && (
+                <Select
+                  name="socials"
+                  defaultText="Select Social"
+                  defaultValue="0"
+                  options={SOCIALS}
+                />
+              )}
+              <Input
+                type="text"
+                label="URL"
+                placeholder="Enter Profile URL"
+                className=" w-full bg-transparent border-2 rounded-xl
+                  border-white p-2 text-black placeholder:text-gray-700"
+                ref={urlRef}
+              />
+              <DialogFooter>
+                <Button type="submit" variant={"secondary"}>
+                  Add
+                </Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SecondaryNav
+export default SecondaryNav;
