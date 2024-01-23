@@ -18,8 +18,8 @@ interface Props {
 const SecondaryNav: React.FC<Props> = ({ type }) => {
   const urlRef = useRef<HTMLInputElement>(null);
   return (
-    <div className="w-full bg-[#2A272A] p-4 flex items-center justify-between">
-      <div className="text-white">Your {type}</div>
+    <div className="w-full bg-inherit p-4 flex items-center justify-between">
+      <div className="text-2xl font-bold text-[#495E57]">Your {type}</div>
       <div>
         <Dialog>
           <DialogTrigger>

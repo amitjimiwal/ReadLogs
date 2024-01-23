@@ -1,10 +1,5 @@
 import React, { useRef } from "react";
 import { Button } from "./button";
-interface Props {
-  id: string;
-  name: string;
-  url: string;
-}
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import {
   Dialog,
@@ -16,16 +11,22 @@ import {
 } from "@/components/ui/dialog";
 import Input from "./Input";
 import CopyButton from "../CopyButton";
+
+interface Props {
+  id: string;
+  name: string;
+  url: string;
+}
 const SocialCard: React.FC<Props> = ({ id, name, url }) => {
   const urlRef = useRef<HTMLInputElement>(null);
   return (
     <Dialog>
       <div
         id={id}
-        className="py-4 px-2 pl-2 w-full shadow-sm bg-[#82A0AA] max-w-sm rounded-xl text-left flex justify-start flex-wrap"
+        className="py-4 px-2 pl-2 w-full shadow-xl max-w-sm rounded-xl text-left flex justify-start flex-wrap bg-[#EBE3D5]"
       >
         <div>
-          <h3 className="font-bold text-white">
+          <h3 className="font-bold text-[#776B5D] text-xl">
             <a href={url} target="_blank" referrerPolicy="no-referrer">
               {name}
             </a>
@@ -33,11 +34,11 @@ const SocialCard: React.FC<Props> = ({ id, name, url }) => {
         </div>
         <div className="flex gap-3 items-center p-2 justify-start w-full">
           <DialogTrigger>
-            <Button className="hover:bg-blue-500 hover:text-white">
+            <Button className="hover:bg-blue-500 hover:text-white bg-white text-black">
               <Pencil1Icon />
             </Button>
           </DialogTrigger>
-          <Button className="hover:bg-red-600 hover:text-white">
+          <Button className="hover:bg-red-600 hover:text-white bg-white text-red-600">
             <TrashIcon />
           </Button>
           <CopyButton text={url} />

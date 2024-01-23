@@ -8,16 +8,16 @@ const Home = () => {
   const authStatus = useSelector((state: AuthState) => state.auth.status);
   const navigate = useNavigate();
   return (
-    <div className="bg-gradient-to-t from-gray-700 via-gray-900 to-black h-[90vh] w-full">
+    <div className="h-[90vh] w-full bg-white">
       <div className="flex flex-col justify-center items-center h-full w-full gap-4">
-        <h1 className="text-6xl sm:text-9xl text-center text-[#B8F2E6] font-bold">
+        <h1 className="text-6xl sm:text-9xl text-center text-heading font-bold">
           ReadLogs
         </h1>
-        <h2 className="text-3xl sm:text-3xl text-center text-[#FAF3DD] font-medium">
-          A simple and easy to use reading tracker
+        <h2 className="text-3xl sm:text-3xl text-center text-subheading font-medium">
+          A simple and easy to use reading and links manager
         </h2>
         <div className="flex gap-5 items-center flex-wrap justify-center">
-          <Button variant={"link"} size={"lg"}>
+          <Button variant={"outline"} size={"lg"}>
             <a href="https://github.com/amitjimiwal/ReadLogs">
               {" "}
               Star On Github{" "}

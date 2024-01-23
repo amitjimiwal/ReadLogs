@@ -9,9 +9,8 @@ const Header = () => {
   const authStatus = useSelector((state: AuthState) => state.auth.status);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
   return (
-    <header className="p-4 flex items-center justify-between bg-black h-[10vh]">
+    <header className="p-4 flex items-center justify-between bg-inherit h-[10vh]">
       <div
         onClick={() => {
           navigate("/");

@@ -29,7 +29,7 @@ function App() {
   return loading ? (
     <LoadingScreen />
   ) : (
-    <div className="min-h-screen w-full dark">
+    <div className="min-h-screen w-full">
       <Header />
       <main>
         <Outlet />

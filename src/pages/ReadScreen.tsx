@@ -6,7 +6,7 @@ const ReadScreen: React.FC = () => {
   return (
     <div>
       <SecondaryNav type={Category.SOCIALS} />
-      <div className="flex flex-wrap gap-4 p-4 bg-[#A3CFCD]">
+      <div className="flex flex-wrap gap-4 p-4 bg-[#B6BBC4]">
         <SocialCard id="1" name="Twitter" url="https://twitter.com" />
         <SocialCard
           id="1"
