@@ -1,6 +1,6 @@
 import { Client, Databases, ID, Query } from "appwrite";
 import config from "../config/config";
-import Read from "../utils/interfaces/read";
+import Read from "../models/read";
 
 class DbService {
      client = new Client();

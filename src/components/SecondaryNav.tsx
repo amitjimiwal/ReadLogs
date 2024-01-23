@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Input from "./ui/Input";
-import { SOCIALS } from "@/utils/constants/socials";
+import { SOCIALS, Priority } from "@/utils/constants/socials";
 import Select from "./ui/Select";
 import { Category } from "@/utils/constants/type";
 interface Props {
@@ -31,21 +31,48 @@ const SecondaryNav: React.FC<Props> = ({ type }) => {
             </DialogHeader>
             <form>
               {type === Category.SOCIALS && (
-                <Select
-                  name="socials"
-                  defaultText="Select Social"
-                  defaultValue="0"
-                  options={SOCIALS}
-                />
-              )}
-              <Input
-                type="text"
-                label="URL"
-                placeholder="Enter Profile URL"
-                className=" w-full bg-transparent border-2 rounded-xl
+                <>
+                  <Select
+                    name="socials"
+                    defaultText="Select Social"
+                    defaultValue="0"
+                    options={SOCIALS}
+                  />
+                  <Input
+                    type="text"
+                    label="URL"
+                    placeholder="Enter Profile URL"
+                    className=" w-full bg-transparent border-2 rounded-xl
                   border-white p-2 text-black placeholder:text-gray-700"
-                ref={urlRef}
-              />
+                    ref={urlRef}
+                  />
+                </>
+              )}
+              {type === Category.READS && (
+                <>
+                  <Input
+                    type="text"
+                    label="Title"
+                    placeholder="Enter Read Title"
+                    className=" w-full bg-transparent border-2 rounded-xl
+                  border-white p-2 text-black placeholder:text-gray-700"
+                  />
+                  <Input
+                    type="text"
+                    label="URL"
+                    placeholder="Enter Url"
+                    className=" w-full bg-transparent border-2 rounded-xl
+                  border-white p-2 text-black placeholder:text-gray-700"
+                  />
+                  <Select
+                    options={Priority}
+                    name="priority"
+                    defaultText="Select Priority"
+                    defaultValue="0"
+                  />
+                </>
+              )}
+
               <DialogFooter>
                 <Button type="submit" variant={"secondary"}>
                   Add

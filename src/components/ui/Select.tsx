@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 interface Props {
   name: string;
-  options: { id: string; name: string }[];
+  options: { id: string |number; name: string }[];
   defaultText: string;
   defaultValue: string;
 }
