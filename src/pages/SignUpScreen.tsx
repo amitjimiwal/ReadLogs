@@ -36,20 +36,20 @@ const SignUpScreen: React.FC = () => {
     }
   };
   return (
-    <section className="w-full text-center h-[90vh] bg-gradient-to-t from-gray-700 via-gray-900 to-black flex flex-col justify-center items-center ">
+    <section className="w-full text-center h-[90vh] flex flex-col justify-center items-center ">
       <form
         onSubmit={handleSubmit(signupHandler)}
-        className="p-3 shadow-xl border-gray-700"
+        className="p-3 shadow-xl border-gray-700 sm:w-1/4"
       >
         <Input
           type="text"
-          label="name"
+          label="username"
           placeholder="Enter your Name"
           {...register("name", {
             required: true,
           })}
-          className="bg-transparent border-2 rounded-xl
-          border-white p-2 text-white placeholder:text-gray-700"
+          className="bg-transparent rounded-xl
+          p-2 text-black placeholder:text-gray-700 w-full outline-none border-b-4 border-black"
         />
 
         <Input
@@ -59,8 +59,8 @@ const SignUpScreen: React.FC = () => {
           {...register("email", {
             required: true,
           })}
-          className="bg-transparent border-2 rounded-xl
-          border-white p-2 text-white placeholder:text-gray-700"
+          className="bg-transparent rounded-xl
+          p-2 text-black placeholder:text-gray-700 w-full outline-none border-b-4 border-black"
         />
         <Input
           type="password"
@@ -69,13 +69,13 @@ const SignUpScreen: React.FC = () => {
           {...register("password", {
             required: true,
           })}
-          className="bg-transparent border-2 rounded-xl
-          border-white p-2 text-white placeholder:text-gray-700"
+          className="bg-transparent rounded-xl
+          p-2 text-black placeholder:text-gray-700 w-full outline-none border-b-4 border-black"
         />
         <Button type="submit" size={"lg"}>
           Sign Up
         </Button>
-        <div className="text-white font-bold mt-4">
+        <div className="text-black font-bold mt-4">
           {" "}
           Already have an account ?{" "}
           <span className="text-yellow-400 underline">

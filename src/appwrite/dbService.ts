@@ -26,10 +26,10 @@ class DbService {
           }
      }
 
-     async addRead({ title, readUrl, reminderTime, priority, userID }: Read) {
+     async addRead({ title, readUrl, isRead=false, priority, userID }: Read) {
           //add a read to the collection
           try {
-               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), JSON.stringify({ title, readUrl, reminderTime, priority, userID }));
+               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), JSON.stringify({ title, readUrl, isRead, priority, userID }));
                return read;
           } catch (error) {
                console.log(error);
