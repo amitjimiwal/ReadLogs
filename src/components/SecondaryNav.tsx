@@ -12,10 +12,12 @@ import Input from "./ui/Input";
 import { SOCIALS, Priority } from "@/utils/constants/socials";
 import Select from "./ui/Select";
 import { Category } from "@/utils/constants/type";
+import Read from "@/models/read";
 interface Props {
   type: Category.READS | Category.SOCIALS;
+  addRead?: (read: Read) => void;
 }
-const SecondaryNav: React.FC<Props> = ({ type }) => {
+const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
   const urlRef = useRef<HTMLInputElement>(null);
   return (
     <div className="w-full bg-inherit p-4 flex items-center justify-between">
@@ -29,7 +31,19 @@ const SecondaryNav: React.FC<Props> = ({ type }) => {
             <DialogHeader>
               <DialogTitle>Add Your {type}</DialogTitle>
             </DialogHeader>
-            <form>
+            <form
+              onSubmit={() => {
+                if (addRead) {
+                  addRead({
+                    isRead: false,
+                    priority: 1,
+                    readUrl: "https://twitter.com",
+                    title: "Twitter",
+                    userID: "65a407452acc273febc9",
+                  });
+                }
+              }}
+            >
               {type === Category.SOCIALS && (
                 <>
                   <Select

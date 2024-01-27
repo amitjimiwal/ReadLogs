@@ -26,7 +26,7 @@ class DbService {
           }
      }
 
-     async addRead({ title, readUrl, isRead=false, priority, userID }: Read) {
+     async addRead({ title, readUrl, isRead = false, priority, userID }: Read) {
           //add a read to the collection
           try {
                const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), JSON.stringify({ title, readUrl, isRead, priority, userID }));
@@ -38,7 +38,7 @@ class DbService {
      async updateRead({ title, documentID, newPriority, readUrl }: {
           title: string,
           documentID: string,
-          newPriority: string,
+          newPriority: number,
           readUrl: string
      }) {
           //update a read in the collection
@@ -49,7 +49,7 @@ class DbService {
                console.log(error);
           }
      }
-     async deleteRead({documentID} :{documentID:string}) { 
+     async deleteRead({ documentID }: { documentID: string }) {
           //delete a read from the collection
           try {
                const read = await this.databases.deleteDocument(config.databaseID, config.userReadCollectionID, documentID);
@@ -58,15 +58,15 @@ class DbService {
                console.log(error);
           }
      }
-     async getRead({userID} :{userID:string}) {   
+     async getRead({ userID }: { userID: string }) {
           //get all the reads of the user
           try {
-               const reads = await this.databases.listDocuments(config.databaseID, config.userReadCollectionID,[
-                    Query.equal("userID", userID)
+               const reads = await this.databases.listDocuments(config.databaseID, config.userReadCollectionID, [
+                    Query.equal("userID", [userID])
                ]);
                return reads;
           } catch (error) {
-               console.log("Error in GetRead():  "+ error);
+               console.log("Error in GetRead():  " + error);
           }
      }
 }

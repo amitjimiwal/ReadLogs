@@ -11,11 +11,11 @@ const Protected = ({ children, authentication }: Props) => {
   const navigate = useNavigate();
   const [loading, setloading] = useState<boolean>(true);
   useEffect(() => {
-    if (authentication && authStatus !=true) {
+    if (authentication && authStatus != true) {
       navigate("/login");
     }
-    if(!authentication && authStatus===true){
-     navigate("/");
+    if (!authentication && authStatus === true) {
+      navigate("/");
     }
     setloading(false);
   }, [authStatus, authentication, navigate]);

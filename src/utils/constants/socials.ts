@@ -4,16 +4,16 @@ export const SOCIALS = [
           name: "LinkedIn",
      },
      {
-          id: "Twitter",
-          name: "twitter",
+          id: "twitter",
+          name: "Twitter",
      },
      {
-          id: "Github",
+          id: "github",
           name: "Github",
      },
      {
-          id: "Instagram",
-          name: "instagram",
+          id: "instagram",
+          name: "Instagram",
      }
 ]
 export const Priority = [{
