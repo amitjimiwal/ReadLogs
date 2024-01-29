@@ -8,65 +8,75 @@ import { Models } from "appwrite";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import { useSelector } from "react-redux";
 import { AuthState } from "@/redux/store/store";
-import Read from "@/models/read";
+import { ReadSchema } from "@/models/read";
 
 const ReadScreen: React.FC = () => {
-  const user: Models.User<Models.User> = useSelector(
+  const user: Models.User<Models.Preferences> | undefined = useSelector(
     (state: AuthState) => state.auth.userData
   );
   const [loading, setLoading] = useState<boolean>(true);
   const [reads, setReads] = useState<
     Models.DocumentList<Models.Document> | undefined
   >();
-
-  const addRead = useCallback((read: Read) => {
+  //state for triggering effect to update the reads
+  const [trigger, setTrigger] = useState<boolean>(false);
+  const addRead = useCallback((read: ReadSchema) => {
     dbService
-      .addRead(read)
+      .addRead({ ...read, userID: String(user?.$id) })
       .then((res) => {
+        setTrigger((trigger) => !trigger);
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [user?.$id]);
   const deleteRead = useCallback((id: string) => {
     dbService
       .deleteRead({ documentID: id })
       .then((res) => {
+        setTrigger((trigger) => !trigger);
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  const updateRead = useCallback((read) => {
-    dbService
-      .updateRead({
-        documentID: read.id,
-        newPriority: read.priority,
-        readUrl: read.readUrl,
-        title: read.title,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const updateRead = useCallback(
+    (
+      id: string,
+      changes: {
+        priority?: number;
+        isRead?: boolean;
+        title?: string;
+        readUrl?: string;
+      }
+    ) => {
+      dbService
+        .updateRead({ documentID: id, updates: changes })
+        .then((res) => {
+          setTrigger((trigger) => !trigger);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    []
+  );
   useEffect(
     function () {
       // setLoading(true);
       try {
-        dbService.getRead({ userID: String(user.$id) }).then((res) => {
+        dbService.getRead({ userID: String(user?.$id) }).then((res) => {
           setReads(res);
-          setLoading((loading) => !loading);
+          setLoading(false);
         });
       } catch (error) {
         console.log(error);
       }
     },
-    [user.$id, addRead, deleteRead, updateRead]
+    [user?.$id, trigger]
   );
 
   return (
@@ -95,6 +105,7 @@ const ReadScreen: React.FC = () => {
             <div className="text-2xl mb-5">{reads?.total} Reads in total</div>
             {reads?.documents?.map((read) => (
               <ReadCard
+                key={read.$id}
                 userID={read.userID}
                 id={read.$id}
                 title={read.title}

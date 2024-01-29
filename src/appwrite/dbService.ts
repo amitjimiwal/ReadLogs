@@ -1,6 +1,6 @@
 import { Client, Databases, ID, Query } from "appwrite";
 import config from "../config/config";
-import Read from "../models/read";
+import { ReadSchema} from "../models/read";
 
 class DbService {
      client = new Client();
@@ -26,24 +26,27 @@ class DbService {
           }
      }
 
-     async addRead({ title, readUrl, isRead = false, priority, userID }: Read) {
+     async addRead({ title, readUrl, isRead = false, priority, userID }: ReadSchema) {
           //add a read to the collection
           try {
-               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), JSON.stringify({ title, readUrl, isRead, priority, userID }));
+               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), { title, readUrl, isRead, priority, userID });
                return read;
           } catch (error) {
                console.log(error);
           }
      }
-     async updateRead({ title, documentID, newPriority, readUrl }: {
-          title: string,
+     async updateRead({ documentID, updates }: {
           documentID: string,
-          newPriority: number,
-          readUrl: string
+          updates: {
+               title?: string,
+               readUrl?: string,
+               priority?: number
+               isRead?: boolean
+          }
      }) {
           //update a read in the collection
           try {
-               const read = await this.databases.updateDocument(config.databaseID, config.userReadCollectionID, documentID, JSON.stringify({ title, readUrl, priority: newPriority }));
+               const read = await this.databases.updateDocument(config.databaseID, config.userReadCollectionID, documentID, JSON.stringify({ ...updates }));
                return read;
           } catch (error) {
                console.log(error);

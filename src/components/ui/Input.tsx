@@ -4,6 +4,7 @@ interface InputProps {
   label?: string;
   className?: string;
   placeholder: string;
+  value?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props?: any;
 }

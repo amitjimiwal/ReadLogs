@@ -2,22 +2,39 @@ import React, { useRef } from "react";
 import { Button } from "./ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
 import Input from "./ui/Input";
 import { SOCIALS, Priority } from "@/utils/constants/socials";
-import Select from "./ui/Select";
 import { Category } from "@/utils/constants/type";
-import Read from "@/models/read";
+import { ReadSchema } from "@/models/read";
+import { useForm } from "react-hook-form";
 interface Props {
   type: Category.READS | Category.SOCIALS;
-  addRead?: (read: Read) => void;
+  addRead?: (read: ReadSchema) => void;
 }
+
+type Reads = ReadSchema;
 const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
+  const { register, handleSubmit } = useForm<Reads>();
+  const submit = (data: Reads) => {
+    console.log({ ...data, priority: Number(data.priority) });
+    // if (addRead) {
+    //   addRead(data);
+    // }
+  };
   const urlRef = useRef<HTMLInputElement>(null);
   return (
     <div className="w-full bg-inherit p-4 flex items-center justify-between">
@@ -31,27 +48,9 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
             <DialogHeader>
               <DialogTitle>Add Your {type}</DialogTitle>
             </DialogHeader>
-            <form
-              onSubmit={() => {
-                if (addRead) {
-                  addRead({
-                    isRead: false,
-                    priority: 1,
-                    readUrl: "https://twitter.com",
-                    title: "Twitter",
-                    userID: "65a407452acc273febc9",
-                  });
-                }
-              }}
-            >
+            <form onSubmit={handleSubmit(submit)}>
               {type === Category.SOCIALS && (
                 <>
-                  <Select
-                    name="socials"
-                    defaultText="Select Social"
-                    defaultValue="0"
-                    options={SOCIALS}
-                  />
                   <Input
                     type="text"
                     label="URL"
@@ -70,6 +69,9 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
                     placeholder="Enter Read Title"
                     className=" w-full bg-transparent border-2 rounded-xl
                   border-white p-2 text-black placeholder:text-gray-700"
+                    {...register("title", {
+                      required: true,
+                    })}
                   />
                   <Input
                     type="text"
@@ -77,21 +79,32 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
                     placeholder="Enter Url"
                     className=" w-full bg-transparent border-2 rounded-xl
                   border-white p-2 text-black placeholder:text-gray-700"
+                    {...register("readUrl", {
+                      required: true,
+                    })}
                   />
                   <Select
-                    options={Priority}
-                    name="priority"
-                    defaultText="Select Priority"
-                    defaultValue="0"
-                  />
+                    {...register("priority", {
+                      required: true,
+                    })}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select Priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">High</SelectItem>
+                      <SelectItem value="2">Low</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </>
               )}
-
-              <DialogFooter>
-                <Button type="submit" variant={"secondary"}>
-                  Add
-                </Button>
-              </DialogFooter>
+              <DialogClose asChild>
+                <DialogFooter>
+                  <Button type="submit" variant={"secondary"}>
+                    Add
+                  </Button>
+                </DialogFooter>
+              </DialogClose>
             </form>
           </DialogContent>
         </Dialog>

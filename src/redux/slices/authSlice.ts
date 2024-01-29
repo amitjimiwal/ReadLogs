@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState = {
+import { Models } from "appwrite";
+interface AuthState {
+     status: boolean;
+     userData?: Models.User<Models.Preferences>  ;
+}
+const initialState:AuthState = {
      status: true,
-     userData: null,
+     userData: undefined
 };
 const authSlice = createSlice({
      name: "auth",
@@ -15,7 +20,7 @@ const authSlice = createSlice({
           //logout , action is not required in this case 
           logout: (state) => {
                state.status = false;
-               state.userData = null;
+               state.userData = undefined;
           },
      },
 });

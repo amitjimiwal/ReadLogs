@@ -1,10 +1,12 @@
-interface Read {
-  id?: string;
+export interface ReadSchema {
   title: string;
   readUrl: string;
   priority: number;
   userID: string;
   isRead: boolean;
 }
-export default Read;
+export interface Read extends ReadSchema {
+  id:string;
+}
+
 
