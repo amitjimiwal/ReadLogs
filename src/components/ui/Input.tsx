@@ -11,7 +11,7 @@ interface InputProps {
 
 const Input = forwardRef(function Input(
   { type = "text", label, className, placeholder, ...props }: InputProps,
-  ref: React.Ref<HTMLInputElement>
+  innerref: React.Ref<HTMLInputElement>
 ) {
   const id = useId();
   return (
@@ -24,7 +24,7 @@ const Input = forwardRef(function Input(
       <input
         type={type}
         id={id}
-        ref={ref}
+        ref={innerref}
         className={className}
         placeholder={placeholder}
         {...props}

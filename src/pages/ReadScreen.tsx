@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SecondaryNav from "@/components/SecondaryNav";
-import SocialCard from "@/components/ui/SocialCard";
+import SocialCard from "@/components/SocialCard";
 import { Category } from "@/utils/constants/type";
 import dbService from "@/appwrite/dbService";
-import ReadCard from "@/components/ui/ReadCard";
+import ReadCard from "@/components/ReadCard";
 import { Models } from "appwrite";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import { useSelector } from "react-redux";
@@ -20,17 +20,20 @@ const ReadScreen: React.FC = () => {
   >();
   //state for triggering effect to update the reads
   const [trigger, setTrigger] = useState<boolean>(false);
-  const addRead = useCallback((read: ReadSchema) => {
-    dbService
-      .addRead({ ...read, userID: String(user?.$id) })
-      .then((res) => {
-        setTrigger((trigger) => !trigger);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [user?.$id]);
+  const addRead = useCallback(
+    (read: ReadSchema) => {
+      dbService
+        .addRead({ ...read, userID: String(user?.$id) })
+        .then((res) => {
+          setTrigger((trigger) => !trigger);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [user?.$id]
+  );
   const deleteRead = useCallback((id: string) => {
     dbService
       .deleteRead({ documentID: id })
@@ -49,7 +52,7 @@ const ReadScreen: React.FC = () => {
         priority?: number;
         isRead?: boolean;
         title?: string;
-        readUrl?: string;
+        readUrl?: string | URL;
       }
     ) => {
       dbService

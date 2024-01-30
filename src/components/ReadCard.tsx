@@ -1,15 +1,17 @@
 import React from "react";
-import {Read} from "@/models/read";
-import { Button } from "./button";
-import CopyButton from "../CopyButton";
+import { Read } from "@/models/read";
+import { Button } from "./ui/button";
+import CopyButton from "./CopyButton";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DialogFooter, DialogHeader } from "./dialog";
-import Input from "./Input";
+import { DialogFooter, DialogHeader } from "./ui/dialog";
+import Input from "./ui/Input";
+import { useForm } from "react-hook-form";
 interface ReadProps extends Read {
   deleteRead: (id: string) => void;
   updateRead: (
@@ -18,10 +20,13 @@ interface ReadProps extends Read {
       priority?: number;
       isRead?: boolean;
       title?: string;
-      readUrl?: string;
+      readUrl?: string | URL;
     }
   ) => void;
 }
+type Form = {
+  readUrl: string | URL;
+};
 const ReadCard: React.FC<ReadProps> = ({
   id,
   title,
@@ -31,7 +36,14 @@ const ReadCard: React.FC<ReadProps> = ({
   deleteRead,
   updateRead,
 }) => {
-  const urlRef = React.useRef<HTMLInputElement>(null);
+  const { register, handleSubmit } = useForm<Form>();
+  const submit = (data: Form) => {
+    data = {
+      ...data,
+      readUrl: new URL(data.readUrl),
+    };
+    updateRead(id, { readUrl: data.readUrl });
+  };
   return (
     <>
       <div
@@ -47,10 +59,14 @@ const ReadCard: React.FC<ReadProps> = ({
         >
           <h1 className="text-lg font-semibold flex gap-4 items-center hover:text-blue-500 hover:underline">
             {" "}
-            <a href={readUrl} target="_blank" referrerPolicy="no-referrer">
+            <a
+              href={String(readUrl)}
+              target="_blank"
+              referrerPolicy="no-referrer"
+            >
               {title}
             </a>
-            <CopyButton text={readUrl} />
+            <CopyButton text={String(readUrl)} />
           </h1>
           <div>
             <input
@@ -77,21 +93,24 @@ const ReadCard: React.FC<ReadProps> = ({
               <DialogHeader>
                 <DialogTitle>Edit Read Url</DialogTitle>
               </DialogHeader>
-              <form>
+              <form onSubmit={handleSubmit(submit)}>
                 <Input
                   type="text"
                   label="Enter new Url"
                   placeholder="Enter updatded Url"
                   className=" w-full bg-transparent border-2 rounded-xl
                   border-white p-2 text-black placeholder:text-gray-700"
-                  value={readUrl}
-                  ref={urlRef}
+                  {...register("readUrl", {
+                    required: true,
+                  })}
                 />
-                <DialogFooter>
-                  <Button type="submit" variant={"secondary"}>
-                    Save Changes
-                  </Button>
-                </DialogFooter>
+                <DialogClose asChild>
+                  <DialogFooter>
+                    <Button type="submit" variant={"secondary"}>
+                      Save Changes
+                    </Button>
+                  </DialogFooter>
+                </DialogClose>
               </form>
             </DialogContent>
           </Dialog>
@@ -130,7 +149,11 @@ const ReadCard: React.FC<ReadProps> = ({
             className="bg-green-500 text-white hover:bg-green-600 dark:bg-green-300 dark:text-black dark:hover:bg-green-400"
             variant="secondary"
           >
-            <a href={readUrl} target="_blank" referrerPolicy="no-referrer">
+            <a
+              href={String(readUrl)}
+              target="_blank"
+              referrerPolicy="no-referrer"
+            >
               Go
             </a>
           </Button>

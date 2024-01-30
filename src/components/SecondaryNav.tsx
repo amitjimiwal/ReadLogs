@@ -9,15 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select";
 import Input from "./ui/Input";
-import { SOCIALS, Priority } from "@/utils/constants/socials";
+import { Priority } from "@/utils/constants/socials";
 import { Category } from "@/utils/constants/type";
 import { ReadSchema } from "@/models/read";
 import { useForm } from "react-hook-form";
@@ -30,10 +23,14 @@ type Reads = ReadSchema;
 const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
   const { register, handleSubmit } = useForm<Reads>();
   const submit = (data: Reads) => {
-    console.log({ ...data, priority: Number(data.priority) });
-    // if (addRead) {
-    //   addRead(data);
-    // }
+    data = {
+      ...data,
+      priority: Number(data.priority),
+      readUrl: new URL(data.readUrl),
+    };
+    if (addRead) {
+      addRead(data);
+    }
   };
   const urlRef = useRef<HTMLInputElement>(null);
   return (
@@ -83,19 +80,32 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
                       required: true,
                     })}
                   />
-                  <Select
+                  <select
+                    id="priority"
+                    aria-label="Default select example"
+                    className=" p-2 sm:p-4 border border-gray-300 rounded-lg focus:outline-none text-gray-500 bg-white"
+                    defaultValue="0"
                     {...register("priority", {
                       required: true,
                     })}
                   >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select Priority" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">High</SelectItem>
-                      <SelectItem value="2">Low</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    <option
+                      value="1"
+                      disabled
+                      className="text-sm sm:text-lg"
+                      selected
+                    >
+                      Select Priority
+                    </option>
+                    {Priority?.map((option) => (
+                      <option
+                        value={option.id}
+                        className="text-sm sm:text-lg hover:bg-heading"
+                      >
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
                 </>
               )}
               <DialogClose asChild>

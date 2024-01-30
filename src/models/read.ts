@@ -1,6 +1,6 @@
 export interface ReadSchema {
   title: string;
-  readUrl: string;
+  readUrl: string | URL;
   priority: number;
   userID: string;
   isRead: boolean;

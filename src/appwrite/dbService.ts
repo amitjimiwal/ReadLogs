@@ -39,7 +39,7 @@ class DbService {
           documentID: string,
           updates: {
                title?: string,
-               readUrl?: string,
+               readUrl?: string | URL,
                priority?: number
                isRead?: boolean
           }

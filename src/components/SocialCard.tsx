@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import {
   Dialog,
@@ -9,8 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Input from "./Input";
-import CopyButton from "../CopyButton";
+import Input from "./ui/Input";
+import CopyButton from "./CopyButton";
 
 interface Props {
   id: string;
