@@ -17,11 +17,12 @@ import { useForm } from "react-hook-form";
 interface Props {
   type: Category.READS | Category.SOCIALS;
   addRead?: (read: ReadSchema) => void;
+  updateSortBy?: (sortBy: number) => void;
 }
 
 type Reads = ReadSchema;
-const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
-  const { register, handleSubmit,reset } = useForm<Reads>();
+const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
+  const { register, handleSubmit, reset } = useForm<Reads>();
   const submit = (data: Reads) => {
     data = {
       ...data,
@@ -36,11 +37,31 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
   const urlRef = useRef<HTMLInputElement>(null);
   return (
     <div className="w-full bg-inherit p-4 flex items-center justify-between">
-      <div className="text-2xl font-bold text-[#495E57]">Your {type}</div>
-      <div>
+      <div className="sm:text-2xl font-bold text-[#495E57] text-lg">
+        Your {type}
+      </div>
+      <div className="flex items-center gap-3">
+        <select
+          id="sortBy"
+          aria-label="Default select example"
+          className="outline-none border-gray-500 border-[1px] rounded-lg focus:outline-none text-gray-500 bg-white sm:px-2 sm:py-1"
+          defaultValue="0"
+          onChange={(e) => {
+            if (updateSortBy) {
+              updateSortBy(Number(e.target.value));
+            }
+          }}
+        >
+          <option value="0" className="text-sm sm:text-lg hover:bg-heading">
+            High to Low
+          </option>
+          <option value="1" className="text-sm sm:text-lg hover:bg-heading">
+            Low to High
+          </option>
+        </select>
         <Dialog>
           <DialogTrigger>
-            <Button>Add +</Button>
+            <Button className="text-sm sm:text-xl">Add +</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
@@ -100,6 +121,7 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
                     </option>
                     {Priority?.map((option) => (
                       <option
+                        key={option.id}
                         value={option.id}
                         className="text-sm sm:text-lg hover:bg-heading"
                       >

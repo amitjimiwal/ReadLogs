@@ -14,6 +14,7 @@ const ReadScreen: React.FC = () => {
   const user: Models.User<Models.Preferences> | undefined = useSelector(
     (state: AuthState) => state.auth.userData
   );
+  const [sortBy,setSortBy] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [reads, setReads] = useState<
     Models.DocumentList<Models.Document> | undefined
@@ -67,11 +68,25 @@ const ReadScreen: React.FC = () => {
     },
     []
   );
+  const updateSortby=useCallback((sortBy:number)=>{
+    setSortBy(sortBy);
+  },[])
   useEffect(
     function () {
       // setLoading(true);
       try {
         dbService.getRead({ userID: String(user?.$id) }).then((res) => {
+          //sort reads by priority
+          if(sortBy === 0){
+            res?.documents?.sort((a,b) => {
+              return a.priority - b.priority;
+            })
+          }
+          else if(sortBy === 1){
+            res?.documents?.sort((a,b) => {
+              return b.priority - a.priority;
+            })
+          }
           setReads(res);
           setLoading(false);
         });
@@ -79,7 +94,7 @@ const ReadScreen: React.FC = () => {
         console.log(error);
       }
     },
-    [user?.$id, trigger]
+    [user?.$id, trigger,sortBy]
   );
 
   return (
@@ -99,7 +114,7 @@ const ReadScreen: React.FC = () => {
           <SocialCard id="1" name="Twitter" url="https://twitter.com" />
         </div>
       )} */}
-      <SecondaryNav type={Category.READS} addRead={addRead} />
+      <SecondaryNav type={Category.READS} addRead={addRead} updateSortBy={updateSortby}/>
       {loading ? (
         <LoadingSkeleton number={2} />
       ) : (
