@@ -17,7 +17,7 @@ export const theme = {
   },
   extend: {
     colors: {
-      heading: '#45474B',
+      heading: '#FFF7D4',
       subheading: '#F4CE14',
       pm: '#495E57',
       primaryBG: "#355691",

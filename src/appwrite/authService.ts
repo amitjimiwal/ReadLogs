@@ -46,6 +46,14 @@ class AuthService {
       console.log(error);
     }
   }
+  async createGoogleOAuth2Session(redirect: string,success: string,) {
+    try {
+      const googleOAuth2 = await this.account.createOAuth2Session("google", success, redirect);
+      return googleOAuth2;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 const authService = new AuthService();
 export default authService;

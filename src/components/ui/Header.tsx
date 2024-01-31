@@ -5,7 +5,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AuthState } from "@/redux/store/store";
 import logo from "../../assets/images/logo.png";
+import { Models } from "appwrite";
 const Header = () => {
+  const user: Models.User<Models.Preferences> | undefined = useSelector(
+    (state: AuthState) => state.auth.userData
+  );
   const authStatus = useSelector((state: AuthState) => state.auth.status);
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,11 +28,20 @@ const Header = () => {
       </div>
       <Button
         onClick={() => {
-          authStatus ? navigate("/reads") : navigate("/login");
+          authStatus
+            ? location.pathname === "/reads"
+              ? navigate(`/user/${user?.name}`)
+              : navigate("/reads")
+            : navigate("/login");
         }}
         size={"lg"}
       >
-        {authStatus ? location.pathname === "/reads" ? "Profile" : "Dashboard" : "Get Started"} <MoveRight size={24} />
+        {authStatus
+          ? location.pathname === "/reads"
+            ? "Profile"
+            : "Dashboard"
+          : "Get Started"}{" "}
+        <MoveRight size={24} />
       </Button>
     </header>
   );

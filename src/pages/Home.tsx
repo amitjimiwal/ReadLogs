@@ -8,9 +8,9 @@ const Home = () => {
   const authStatus = useSelector((state: AuthState) => state.auth.status);
   const navigate = useNavigate();
   return (
-    <div className="h-[90vh] w-full bg-white">
+    <div className="h-[90vh] w-full bg-gradient-to-b from-slate-50 to-slate-600">
       <div className="flex flex-col justify-center items-center h-full w-full gap-4">
-        <h1 className="text-6xl sm:text-9xl text-center text-heading font-bold">
+        <h1 className="text-6xl sm:text-9xl text-center text-black font-bold">
           ReadLogs
         </h1>
         <h2 className="text-3xl sm:text-3xl text-center text-subheading font-medium">

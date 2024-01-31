@@ -10,6 +10,7 @@ import Protected from "./components/Protected.tsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.ts";
 import Home from "./pages/Home.tsx";
+import ProfileScreen from "./pages/ProfileScreen.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,14 @@ const router = createBrowserRouter([
           <Protected authentication={true}>
             <ReadScreen />
           </Protected>),
-      }
+      },
+      {
+        path: "/user/:id",
+        element: (
+          <Protected authentication={true}>
+            <ProfileScreen />
+          </Protected>)
+      },
     ],
   },
 ]);

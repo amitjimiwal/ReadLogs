@@ -29,7 +29,7 @@ function App() {
   return loading ? (
     <LoadingScreen />
   ) : (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full bg-slate-50">
       <ToastContainer
         position="top-right"
         autoClose={5000}
