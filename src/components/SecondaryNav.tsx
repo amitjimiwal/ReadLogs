@@ -21,7 +21,7 @@ interface Props {
 
 type Reads = ReadSchema;
 const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
-  const { register, handleSubmit } = useForm<Reads>();
+  const { register, handleSubmit,reset } = useForm<Reads>();
   const submit = (data: Reads) => {
     data = {
       ...data,
@@ -31,6 +31,7 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
     if (addRead) {
       addRead(data);
     }
+    reset();
   };
   const urlRef = useRef<HTMLInputElement>(null);
   return (
@@ -90,7 +91,7 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead }) => {
                     })}
                   >
                     <option
-                      value="1"
+                      value="0"
                       disabled
                       className="text-sm sm:text-lg"
                       selected

@@ -4,6 +4,7 @@ export interface ReadSchema {
   priority: number;
   userID: string;
   isRead: boolean;
+  previewImage: URL;
 }
 export interface Read extends ReadSchema {
   id:string;

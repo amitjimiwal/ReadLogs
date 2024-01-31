@@ -5,5 +5,6 @@ const config={
      userReadCollectionID:String(import.meta.env.VITE_APPWRITE_USER_READ_COLLECTION_ID),
      bucketID:String(import.meta.env.VITE_APPWRITE_BUCKET_ID),
      socialsCollectionID:String(import.meta.env.VITE_APPWRITE_SOCIALS_COLLECTION_ID),
+     imagePreviewBaseURL:String(import.meta.env.VITE_IMAGEPREVIEW_ENDPOINT)
 };
 export default config;

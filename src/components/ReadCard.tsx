@@ -12,6 +12,7 @@ import {
 import { DialogFooter, DialogHeader } from "./ui/dialog";
 import Input from "./ui/Input";
 import { useForm } from "react-hook-form";
+import { Priority } from "@/utils/constants/socials";
 interface ReadProps extends Read {
   deleteRead: (id: string) => void;
   updateRead: (
@@ -35,6 +36,7 @@ const ReadCard: React.FC<ReadProps> = ({
   priority,
   deleteRead,
   updateRead,
+  previewImage,
 }) => {
   const { register, handleSubmit } = useForm<Form>();
   const submit = (data: Form) => {
@@ -48,13 +50,19 @@ const ReadCard: React.FC<ReadProps> = ({
     <>
       <div
         id={id}
-        className={`rounded-lg shadow-md overflow-hidden w-full mb-5 ${
+        className={`rounded-lg shadow-md overflow-hidden w-fit mb-5 ${
           isRead ? "border-green-400 border-2" : ""
         }`}
       >
+        <div className="w-full">
+          <img
+            src={String(previewImage)}
+            className="w-full h-auto aspect-video sm:w-80"
+          />
+        </div>
         <div
           className={`p-2 flex items-center justify-between ${
-            priority === 2 ? "bg-red-200" : "bg-gray-100 dark:bg-gray-800"
+            priority === 1 ? "bg-red-200" : "bg-gray-100 dark:bg-gray-800"
           }`}
         >
           <h1 className="text-lg font-semibold flex gap-4 items-center hover:text-blue-500 hover:underline">
@@ -79,7 +87,7 @@ const ReadCard: React.FC<ReadProps> = ({
             />
           </div>
         </div>
-        <div className="flex p-2 bg-gray-50 dark:bg-gray-900 gap-3">
+        <div className="flex p-2 bg-gray-50 dark:bg-gray-900 gap-3 items-center">
           <Dialog>
             <DialogTrigger>
               <Button
@@ -134,7 +142,9 @@ const ReadCard: React.FC<ReadProps> = ({
                 </p>
               </DialogContent>
               <DialogFooter>
-                <Button variant="secondary">Cancel</Button>
+                <DialogClose asChild>
+                  <Button variant="secondary">Cancel</Button>
+                </DialogClose>
                 <Button
                   className="text-red-500 border-red-500 hover:bg-red-500 hover:text-white dark:text-red-300 dark:border-red-300 dark:hover:bg-red-300 dark:hover:text-black"
                   variant="outline"
@@ -157,6 +167,26 @@ const ReadCard: React.FC<ReadProps> = ({
               Go
             </a>
           </Button>
+          <div className="ml-auto">
+            <select
+              id="priority"
+              aria-label="Default select example"
+              className="outline-none"
+              defaultValue={priority}
+              onChange={(e) => {
+                updateRead(id, { priority: Number(e.target.value) });
+              }}
+            >
+              {Priority?.map((option) => (
+                <option
+                  value={option.id}
+                  className="text-sm sm:text-lg hover:bg-heading"
+                >
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     </>

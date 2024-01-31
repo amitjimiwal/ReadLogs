@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SecondaryNav from "@/components/SecondaryNav";
-import SocialCard from "@/components/SocialCard";
+// import SocialCard from "@/components/SocialCard";
 import { Category } from "@/utils/constants/type";
 import dbService from "@/appwrite/dbService";
 import ReadCard from "@/components/ReadCard";
@@ -84,8 +84,8 @@ const ReadScreen: React.FC = () => {
 
   return (
     <div>
-      <SecondaryNav type={Category.SOCIALS} />
-      {loading ? (
+      {/* <SecondaryNav type={Category.SOCIALS} />
+      {loading ? ( 
         <LoadingSkeleton number={2} />
       ) : (
         <div className="flex flex-wrap gap-4 p-4 bg-[#B6BBC4]">
@@ -98,27 +98,30 @@ const ReadScreen: React.FC = () => {
           <SocialCard id="1" name="Twitter" url="https://twitter.com" />
           <SocialCard id="1" name="Twitter" url="https://twitter.com" />
         </div>
-      )}
+      )} */}
       <SecondaryNav type={Category.READS} addRead={addRead} />
       {loading ? (
         <LoadingSkeleton number={2} />
       ) : (
         <>
-          <div className="p-4">
+          <div className="p-4 w-full">
             <div className="text-2xl mb-5">{reads?.total} Reads in total</div>
-            {reads?.documents?.map((read) => (
-              <ReadCard
-                key={read.$id}
-                userID={read.userID}
-                id={read.$id}
-                title={read.title}
-                readUrl={read.readUrl}
-                priority={read.priority}
-                isRead={read.isRead}
-                deleteRead={deleteRead}
-                updateRead={updateRead}
-              />
-            ))}
+            <div className="flex flex-wrap gap-10 items-center mx-auto animate-fade-down">
+              {reads?.documents?.map((read) => (
+                <ReadCard
+                  key={read.$id}
+                  userID={read.userID}
+                  id={read.$id}
+                  title={read.title}
+                  readUrl={read.readUrl}
+                  priority={read.priority}
+                  isRead={read.isRead}
+                  previewImage={read.previewImage}
+                  deleteRead={deleteRead}
+                  updateRead={updateRead}
+                />
+              ))}
+            </div>
           </div>
         </>
       )}

@@ -29,7 +29,9 @@ class DbService {
      async addRead({ title, readUrl, isRead = false, priority, userID }: ReadSchema) {
           //add a read to the collection
           try {
-               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), { title, readUrl, isRead, priority, userID });
+               const preview=await fetch(`${config.imagePreviewBaseURL}/?url=${String(readUrl)}`);
+               const res=await preview.json();
+               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), { title, readUrl, isRead, priority, userID,previewImage: new URL(res.image)});
                return read;
           } catch (error) {
                console.log(error);
@@ -42,10 +44,16 @@ class DbService {
                readUrl?: string | URL,
                priority?: number
                isRead?: boolean
+               previewImage?: URL
           }
      }) {
           //update a read in the collection
           try {
+               if(updates.readUrl){
+                    const preview=await fetch(`${config.imagePreviewBaseURL}/?url=${String(updates.readUrl)}`);
+                    const res=await preview.json();
+                    updates.previewImage=new URL(res.image);
+               }
                const read = await this.databases.updateDocument(config.databaseID, config.userReadCollectionID, documentID, JSON.stringify({ ...updates }));
                return read;
           } catch (error) {
