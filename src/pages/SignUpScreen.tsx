@@ -1,17 +1,19 @@
 import Input from "@/components/ui/Input";
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import authService from "@/appwrite/authService";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/authSlice";
+import toast from "react-hot-toast";
 type SignupFields = {
   name: string;
   email: string;
   password: string;
 };
 const SignUpScreen: React.FC = () => {
+  const [loader, setLoader] = useState<boolean | undefined>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,11 +21,13 @@ const SignUpScreen: React.FC = () => {
   const signupHandler: SubmitHandler<SignupFields> = async (
     data: SignupFields
   ) => {
-    console.log(data);
+    setLoader(true);
     try {
       const session = await authService.createUser(data);
       if (session) {
         authService.getCurrentUser().then((userData) => {
+          setLoader(false);
+          toast.success("SignUp Success");
           if (userData) {
             dispatch(login({ userData }));
             navigate("/reads");
@@ -31,6 +35,8 @@ const SignUpScreen: React.FC = () => {
         });
       }
     } catch (error) {
+      setLoader(false);
+      toast.error(error as string);
       console.log("Login page error");
       console.log(error);
     }
@@ -73,7 +79,11 @@ const SignUpScreen: React.FC = () => {
           p-2 text-black placeholder:text-gray-700 w-full outline-none border-b-4 border-black"
         />
         <Button type="submit" size={"lg"}>
-          Sign Up
+          {loader ? (
+            <div className="border-gray-300 h-5 w-5 animate-spin rounded-full border-8 border-t-blue-600" />
+          ) : (
+            "Sign Up"
+          )}
         </Button>
         {/* <button
           type="button"
