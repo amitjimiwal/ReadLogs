@@ -1,74 +1,82 @@
+**ReadLogs**
 
-# React-TypeScript Testing Library and Tailwind CSS Template
+![Project Logo](https://res.cloudinary.com/dejzy9q65/image/upload/v1707657594/Screenshot_2024-02-11_at_6.48.03_PM_b0ulxs.png)
 
-Unlike Create-React-App, Vite doesnt come by default with Testing Library, Jest setup with it . So, this repository can help you out in quickly getting started.
+## About
 
+Efficiently Manage Your Reads, Docs.
 
-## Features
+## Installation
 
-- **[React](https://react.dev)**: A popular JavaScript library for building user interfaces.
-- **[Typescript](https://www.typescriptlang.org/)**: A typed superset of JavaScript that helps catch errors early and improve code quality.
-- **[Jest](https://jestjs.io/)**: A testing utility for writing unit and integration tests with a user-centric approach.
-- **[React-Testing-Library](https://testing-library.com/)**: A testing library for React for writing unit and integration tests with a user-centric approach.
-- **[Tailwind](https://tailwindcss.com/)**: A utility-first CSS framework for rapidly building custom designs.
+Follow these steps to set up the Project on your local machine:
 
-## Getting Started
-Follow these steps to set up a new project based on this template:
+1. Clone the repository to your local environment using Git:
 
-1. Click the "Use this template" button on this repository to create a new repository using this template.
+```bash
+git clone https://github.com/amitjimiwal/ReadLogs.git
+```
 
-2. Clone your newly created repository to your local machine:
+2. Navigate to the project directory:
 
-   ```bash
-   git clone https://github.com/amitjimiwal/React-ts-jest-template.git
-   ```
+```bash
+cd ReadLogs
+```
 
-3. Navigate to the project directory:
+3. Install the required dependencies:
 
-   ```bash
-   cd your-project-name
-   ```
+```bash
+npm install
+```
 
-4. Install dependencies:
+4. Go through `env.sample` file ,create a `.env.local` file and add all the corresponding environment variables in your local setup. You can go through this video [Hitesh Youtube Video](https://youtu.be/vJLW3S_97aQ?si=_mNJN6YQet0rz5nw)
 
-   ```bash
-   npm install
-   ```
+5. Build the project:
+```bash
+npm run build
+```
 
-5. Start the development server:
+6. Start the application:
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-6. Open your browser and visit `http://localhost:5173` to see your app in action.
+The application will now be running on your local machine at [http://localhost:5173](http://localhost:5173)
 
-## Contributing
+## Contribution
 
-Contributions to improve this template are welcome! If you find any issues or have suggestions for enhancements, feel free to open an issue or submit a pull request.
+We welcome contributions to enhance the functionality and usability of the Project ReadLogs. If you'd like to contribute, follow these steps:
 
-1. Fork the repository.
+1. Fork the repository from the GitHub page: [https://github.com/amitjimiwal/ReadLogs](https://github.com/amitjimiwal/ReadLogs)
 
-2. Create a new branch:
+2. Clone your forked repository to your local machine.
 
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+3. Create a new branch for your feature or bug fix:
 
-3. Make your changes and commit them:
+```bash
+git checkout -b feature/your-feature-name
+```
 
-   ```bash
-   git commit -m "Add your changes"
-   ```
+4. Make your changes and commit them with descriptive commit messages:
 
-4. Push your changes to your forked repository:
+```bash
+git commit -m "Add new feature" -m "Description of the changes."
+```
 
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+5. Push the changes to your forked repository:
 
-5. Open a pull request against the `main` branch of this repository.
+```bash
+git push origin feature/your-feature-name
+```
+
+6. Create a pull request on the original repository, explaining the changes you made and their benefits.
+
+We appreciate your contributions, and together, we can make the Github Wrapped even better!
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The ReadLogs Project is licensed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to use, modify, and distribute the software as per the terms of the license.
+
+# 
+
+Thank you for taking an interest ReadLogs ! If you encounter any issues, have suggestions, or want to report a bug, feel free to create an issue on the [GitHub repository](https://github.com/amitjimiwal/ReadLogs). Happy Coding!
