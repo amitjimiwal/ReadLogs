@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import authService from "./appwrite/authService";
 import { login, logout } from "./redux/slices/authSlice";
 import LoadingScreen from "./pages/LoadingScreen";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatch();
@@ -30,20 +30,8 @@ function App() {
     <LoadingScreen />
   ) : (
     <div className="min-h-screen w-full bg-slate-50">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {/* Same as */}
-      <ToastContainer />
+      <Toaster position="top-center" reverseOrder={false} />
       <Header />
       <main>
         <Outlet />

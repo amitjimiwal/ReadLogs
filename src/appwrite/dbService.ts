@@ -1,7 +1,6 @@
 import { Client, Databases, ID, Query } from "appwrite";
 import config from "../config/config";
-import { ReadSchema} from "../models/read";
-
+import { ReadSchema } from "../models/read";
 class DbService {
      client = new Client();
      private databases;
@@ -27,16 +26,40 @@ class DbService {
      }
 
      async addRead({ title, readUrl, isRead = false, priority, userID }: ReadSchema) {
-          //add a read to the collection
+          //checking the image preview and adding some other image if it can't be extracted from it.
+          let previewImageUrl;
           try {
-               const preview=await fetch(`${config.imagePreviewBaseURL}/?url=${String(readUrl)}`);
-               const res=await preview.json();
-               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), { title, readUrl, isRead, priority, userID,previewImage: new URL(res.image)});
+               const preview = await fetch(`${config.imagePreviewBaseURL}/?url=${encodeURIComponent(String(readUrl))}`);
+               const res = await preview.json();
+               if (res.sucess === false) {
+                    // Use a default image URL if preview extraction fails
+                    previewImageUrl = "https://vishwaentertainers.com/wp-content/uploads/2020/04/No-Preview-Available.jpg";
+               } else {
+                    previewImageUrl = res.image;
+               }
+          } catch (error) {
+               console.log("Error while fetching preview image: " + error);
+               // Use a default image URL if there's an error fetching the image
+               previewImageUrl = "https://vishwaentertainers.com/wp-content/uploads/2020/04/No-Preview-Available.jpg";
+          }
+
+          try {
+               //add a read to the collection
+               const read = await this.databases.createDocument(config.databaseID, config.userReadCollectionID, ID.unique(), {
+                    title,
+                    readUrl,
+                    isRead,
+                    priority,
+                    userID,
+                    previewImage: new URL(previewImageUrl)
+               });
                return read;
           } catch (error) {
-               console.log(error);
+               console.log("Error while adding doc: " + error);
+               throw error; // Rethrow the error to handle it upstream if needed
           }
      }
+
      async updateRead({ documentID, updates }: {
           documentID: string,
           updates: {
@@ -49,10 +72,10 @@ class DbService {
      }) {
           //update a read in the collection
           try {
-               if(updates.readUrl){
-                    const preview=await fetch(`${config.imagePreviewBaseURL}/?url=${String(updates.readUrl)}`);
-                    const res=await preview.json();
-                    updates.previewImage=new URL(res.image);
+               if (updates.readUrl) {
+                    const preview = await fetch(`${config.imagePreviewBaseURL}/?url=${String(updates.readUrl)}`);
+                    const res = await preview.json();
+                    updates.previewImage = new URL(res.image);
                }
                const read = await this.databases.updateDocument(config.databaseID, config.userReadCollectionID, documentID, JSON.stringify({ ...updates }));
                return read;

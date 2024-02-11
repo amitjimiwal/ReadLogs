@@ -2,22 +2,28 @@ import authService from "@/appwrite/authService";
 import Input from "@/components/ui/Input";
 import { Button } from "@/components/ui/button";
 import { login } from "@/redux/slices/authSlice";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 type LoginFiels = {
   email: string;
   password: string;
 };
 const LoginScreen = () => {
+  const [loader, setLoader] = useState<boolean | undefined>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm<LoginFiels>();
   const loginHandler: SubmitHandler<LoginFiels> = async (data: LoginFiels) => {
     try {
+      setLoader(true);
       const session = await authService.login(data);
       if (session) {
         authService.getCurrentUser().then((userData) => {
+          setLoader(false);
+          toast.success("Login Success");
           if (userData) {
             dispatch(login(userData));
             navigate("/reads");
@@ -25,6 +31,8 @@ const LoginScreen = () => {
         });
       }
     } catch (error) {
+      setLoader(false);
+      toast.error(error as string);
       console.log("Login page error");
       console.log(error);
     }
@@ -57,7 +65,11 @@ const LoginScreen = () => {
           p-2 text-black placeholder:text-gray-700 w-full outline-none border-b-4 border-black"
         />
         <Button type="submit" size={"lg"}>
-          Login to Your Account
+          {loader ? (
+            <div className="border-gray-300 h-5 w-5 animate-spin rounded-full border-8 border-t-blue-600" />
+          ) : (
+            "Login to Your Account"
+          )}
         </Button>
         {/* <div className="max-w-md text-center mt-5">
           <button

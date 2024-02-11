@@ -9,6 +9,7 @@ import LoadingSkeleton from "@/components/LoadingSkeleton";
 import { useSelector } from "react-redux";
 import { AuthState } from "@/redux/store/store";
 import { ReadSchema } from "@/models/read";
+import toast from "react-hot-toast";
 
 const ReadScreen: React.FC = () => {
   const user: Models.User<Models.Preferences> | undefined = useSelector(
@@ -26,10 +27,12 @@ const ReadScreen: React.FC = () => {
       dbService
         .addRead({ ...read, userID: String(user?.$id) })
         .then((res) => {
+          toast.success("Read added successfully");
           setTrigger((trigger) => !trigger);
           console.log(res);
         })
         .catch((err) => {
+          toast.error("Error while adding read");
           console.log(err);
         });
     },
@@ -39,10 +42,12 @@ const ReadScreen: React.FC = () => {
     dbService
       .deleteRead({ documentID: id })
       .then((res) => {
+        toast.success("Read deleted successfully");
         setTrigger((trigger) => !trigger);
         console.log(res);
       })
       .catch((err) => {
+        toast.error("Error while deleting read");
         console.log(err);
       });
   }, []);
@@ -59,10 +64,12 @@ const ReadScreen: React.FC = () => {
       dbService
         .updateRead({ documentID: id, updates: changes })
         .then((res) => {
+          toast.success("Read updated successfully");
           setTrigger((trigger) => !trigger);
           console.log(res);
         })
         .catch((err) => {
+          toast.error("Error while updating read");
           console.log(err);
         });
     },
@@ -99,21 +106,6 @@ const ReadScreen: React.FC = () => {
 
   return (
     <div>
-      {/* <SecondaryNav type={Category.SOCIALS} />
-      {loading ? ( 
-        <LoadingSkeleton number={2} />
-      ) : (
-        <div className="flex flex-wrap gap-4 p-4 bg-[#B6BBC4]">
-          <SocialCard id="1" name="Twitter" url="https://twitter.com" />
-          <SocialCard
-            id="1"
-            name="Linkedin"
-            url="https://www.linkedin.com/company/zocketdigital/sjfhdfhdjfdf"
-          />
-          <SocialCard id="1" name="Twitter" url="https://twitter.com" />
-          <SocialCard id="1" name="Twitter" url="https://twitter.com" />
-        </div>
-      )} */}
       <SecondaryNav type={Category.READS} addRead={addRead} updateSortBy={updateSortby}/>
       {loading ? (
         <LoadingSkeleton number={2} />
