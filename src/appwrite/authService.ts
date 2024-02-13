@@ -53,6 +53,11 @@ class AuthService {
   async createGoogleOAuth2Session(redirect: string, success: string,) {
     try {
       const googleOAuth2 = await this.account.createOAuth2Session("google", success, redirect);
+      const user= await this.getCurrentUser();
+      await this.databases.createDocument(config.databaseID, config.userCollectionID, ID.unique(), {
+        userID: user?.$id,
+        isEmailReminder: false
+      });
       return googleOAuth2;
     } catch (error) {
       console.log(error);
