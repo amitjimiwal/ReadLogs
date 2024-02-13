@@ -105,6 +105,17 @@ class DbService {
      }
 
      //Email Reminders Functions
+     async getEmailReminder({ userID }: { userID: string }) {
+          //get the email reminder of the user
+          try {
+               const user = await this.databases.listDocuments(config.databaseID, config.userCollectionID, [
+                    Query.equal("userID", [userID])
+               ]);
+               return user;
+          } catch (error) {
+               console.log(error);
+          }
+     }
      async updateEmailReminder({ documentID, isEmailReminder }: { documentID: string, isEmailReminder: boolean }) {
           //update the email reminder of the user
           try {
