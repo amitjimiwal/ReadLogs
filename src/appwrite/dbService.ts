@@ -103,6 +103,28 @@ class DbService {
                console.log("Error in GetRead():  " + error);
           }
      }
+
+     //Email Reminders Functions
+     async getEmailReminder({ userID }: { userID: string }) {
+          //get the email reminder of the user
+          try {
+               const user = await this.databases.listDocuments(config.databaseID, config.userCollectionID, [
+                    Query.equal("userID", [userID])
+               ]);
+               return user;
+          } catch (error) {
+               console.log(error);
+          }
+     }
+     async updateEmailReminder({ documentID, isEmailReminder }: { documentID: string, isEmailReminder: boolean }) {
+          //update the email reminder of the user
+          try {
+               const data = await this.databases.updateDocument(config.databaseID, config.userCollectionID, documentID, JSON.stringify({ isEmailReminder }));
+               return data;
+          } catch (error) {
+               console.log(error);
+          }
+     }
 }
 
 const dbService = new DbService();
