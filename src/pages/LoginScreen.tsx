@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import config from "@/config/config";
 type LoginFiels = {
   email: string;
   password: string;
@@ -72,7 +71,7 @@ const LoginScreen = () => {
             "Login to Your Account"
           )}
         </Button>
-        <div className="max-w-md text-center mt-5">
+        {/* <div className="max-w-md text-center mt-5">
           <button
             type="button"
             className="text-white  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55"
@@ -99,7 +98,7 @@ const LoginScreen = () => {
             </svg>
             Sign In with Google
           </button>
-        </div>
+        </div> */}
         <div className="mt-5 text-black font-bold ">
           {" "}
           Don't have a account ?{" "}

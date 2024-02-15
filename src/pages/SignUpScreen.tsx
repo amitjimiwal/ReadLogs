@@ -7,7 +7,6 @@ import authService from "@/appwrite/authService";
 import { useDispatch } from "react-redux";
 import { login } from "@/redux/slices/authSlice";
 import toast from "react-hot-toast";
-import config from "@/config/config";
 type SignupFields = {
   name: string;
   email: string;
@@ -87,7 +86,7 @@ const SignUpScreen: React.FC = () => {
               "Sign Up"
             )}
           </Button>
-          <button
+          {/* <button
             type="button"
             className="text-white  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55"
             onClick={() => {
@@ -117,7 +116,7 @@ const SignUpScreen: React.FC = () => {
               ></path>
             </svg>
             Sign Up with Google
-          </button>
+          </button> */}
         </div>
         <div className="text-black font-bold mt-4">
           {" "}

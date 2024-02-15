@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SecondaryNav from "@/components/SecondaryNav";
-// import SocialCard from "@/components/SocialCard";
 import { Category } from "@/utils/constants/type";
 import dbService from "@/appwrite/dbService";
 import ReadCard from "@/components/ReadCard";
@@ -15,7 +14,7 @@ const ReadScreen: React.FC = () => {
   const user: Models.User<Models.Preferences> | undefined = useSelector(
     (state: AuthState) => state.auth.userData
   );
-  const [sortBy,setSortBy] = useState<number>(0);
+  const [sortBy, setSortBy] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [reads, setReads] = useState<
     Models.DocumentList<Models.Document> | undefined
@@ -26,10 +25,9 @@ const ReadScreen: React.FC = () => {
     (read: ReadSchema) => {
       dbService
         .addRead({ ...read, userID: String(user?.$id) })
-        .then((res) => {
+        .then(() => {
           toast.success("Read added successfully");
           setTrigger((trigger) => !trigger);
-          console.log(res);
         })
         .catch((err) => {
           toast.error("Error while adding read");
@@ -41,10 +39,9 @@ const ReadScreen: React.FC = () => {
   const deleteRead = useCallback((id: string) => {
     dbService
       .deleteRead({ documentID: id })
-      .then((res) => {
+      .then(() => {
         toast.success("Read deleted successfully");
         setTrigger((trigger) => !trigger);
-        console.log(res);
       })
       .catch((err) => {
         toast.error("Error while deleting read");
@@ -63,10 +60,9 @@ const ReadScreen: React.FC = () => {
     ) => {
       dbService
         .updateRead({ documentID: id, updates: changes })
-        .then((res) => {
+        .then(() => {
           toast.success("Read updated successfully");
           setTrigger((trigger) => !trigger);
-          console.log(res);
         })
         .catch((err) => {
           toast.error("Error while updating read");
@@ -75,24 +71,23 @@ const ReadScreen: React.FC = () => {
     },
     []
   );
-  const updateSortby=useCallback((sortBy:number)=>{
+  const updateSortby = useCallback((sortBy: number) => {
     setSortBy(sortBy);
-  },[])
+  }, []);
   useEffect(
     function () {
       // setLoading(true);
       try {
         dbService.getRead({ userID: String(user?.$id) }).then((res) => {
           //sort reads by priority
-          if(sortBy === 0){
-            res?.documents?.sort((a,b) => {
+          if (sortBy === 0) {
+            res?.documents?.sort((a, b) => {
               return a.priority - b.priority;
-            })
-          }
-          else if(sortBy === 1){
-            res?.documents?.sort((a,b) => {
+            });
+          } else if (sortBy === 1) {
+            res?.documents?.sort((a, b) => {
               return b.priority - a.priority;
-            })
+            });
           }
           setReads(res);
           setLoading(false);
@@ -101,12 +96,16 @@ const ReadScreen: React.FC = () => {
         console.log(error);
       }
     },
-    [user?.$id, trigger,sortBy]
+    [user?.$id, trigger, sortBy]
   );
 
   return (
     <div>
-      <SecondaryNav type={Category.READS} addRead={addRead} updateSortBy={updateSortby}/>
+      <SecondaryNav
+        type={Category.READS}
+        addRead={addRead}
+        updateSortBy={updateSortby}
+      />
       {loading ? (
         <LoadingSkeleton number={2} />
       ) : (

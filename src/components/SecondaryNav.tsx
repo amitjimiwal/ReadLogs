@@ -178,7 +178,7 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
           </Dialog>
         </div>
       </div>
-      {emailReminder != undefined && (
+      {emailReminder?.documents[0] != undefined && (
         <EmailToggle
           isEmailReminder={emailReminder.documents[0].isEmailReminder}
           updateEmail={updateEmailReminder}

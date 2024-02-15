@@ -12,13 +12,22 @@ class AuthService {
     this.account = new Account(this.client);
     this.databases = new Databases(this.client);
   }
+  async createUserEntry({ userID }: { userID: string }) {
+    //creating user entry on Signup to users collection
+    try {
+      await this.databases.createDocument(config.databaseID, config.userCollectionID, ID.unique(), {
+        userID: userID,
+        isEmailReminder: false
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async createUser({ email, password, name }: { email: string, password: string, name: string }) {
     try {
       const userAccount = await this.account.create(ID.unique(), email, password, name);
-      await this.databases.createDocument(config.databaseID, config.userCollectionID, ID.unique(), {
-        userID: userAccount.$id,
-        isEmailReminder: false
-      });
+      await this.login({ email, password });
+      await this.createUserEntry({ userID: userAccount.$id });
       if (userAccount) return this.login({ email, password });
       else return userAccount;
     } catch (error) {
@@ -52,13 +61,10 @@ class AuthService {
   }
   async createGoogleOAuth2Session(redirect: string, success: string,) {
     try {
-      const googleOAuth2 = await this.account.createOAuth2Session("google", success, redirect);
-      const user= await this.getCurrentUser();
-      await this.databases.createDocument(config.databaseID, config.userCollectionID, ID.unique(), {
-        userID: user?.$id,
-        isEmailReminder: false
-      });
-      return googleOAuth2;
+      await this.account.createOAuth2Session("google", success, redirect);
+      const userinfo = await this.account.getSession('current');
+      console.log(userinfo);
+      return userinfo;
     } catch (error) {
       console.log(error);
     }
