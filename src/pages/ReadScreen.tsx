@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import SecondaryNav from "@/components/SecondaryNav";
-import { Category } from "@/utils/constants/type";
+import ReadsNavbar from "@/components/Reads/ReadsNavbar";
 import dbService from "@/appwrite/dbService";
-import ReadCard from "@/components/ReadCard";
+import ReadCard from "@/components/Reads/ReadCard";
 import { Models } from "appwrite";
 import LoadingSkeleton from "@/components/LoadingSkeleton";
 import { useSelector } from "react-redux";
 import { AuthState } from "@/redux/store/store";
 import { ReadSchema } from "@/models/read";
 import toast from "react-hot-toast";
+import Social from "@/components/socials/Social";
 
 const ReadScreen: React.FC = () => {
   const user: Models.User<Models.Preferences> | undefined = useSelector(
@@ -76,7 +76,7 @@ const ReadScreen: React.FC = () => {
   }, []);
   useEffect(
     function () {
-      // setLoading(true);
+      setLoading(true);
       try {
         dbService.getRead({ userID: String(user?.$id) }).then((res) => {
           //sort reads by priority
@@ -101,11 +101,8 @@ const ReadScreen: React.FC = () => {
 
   return (
     <div>
-      <SecondaryNav
-        type={Category.READS}
-        addRead={addRead}
-        updateSortBy={updateSortby}
-      />
+      <Social/>
+      <ReadsNavbar addRead={addRead} updateSortBy={updateSortby} />
       {loading ? (
         <LoadingSkeleton number={2} />
       ) : (
