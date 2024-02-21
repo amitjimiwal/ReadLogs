@@ -50,20 +50,21 @@ const Social: React.FC = () => {
         <LoadingSkeleton number={2} />
       ) : (
         <div className="flex items-center gap-5 flex-wrap">
-          {socialsType.map((social) => {
-            if (socials?.documents[0][social.name] !== null) {
-              return (
-                <SocialCard
-                  key={social.name}
-                  id={social.name}
-                  name={social.icon}
-                  url={socials?.documents[0][social.name]}
-                  updateSocials={updateSocials}
-                  Icon={social.view}
-                />
-              );
-            }
-          })}
+          {!loading &&
+            socialsType.map((social) => {
+              if (socials?.documents[0][social.name] !== null) {
+                return (
+                  <SocialCard
+                    key={social.name}
+                    id={social.name}
+                    name={social.icon}
+                    url={socials?.documents[0][social.name]}
+                    updateSocials={updateSocials}
+                    Icon={social.view}
+                  />
+                );
+              }
+            })}
           <AddSocial updateSocials={updateSocials} />
         </div>
       )}
