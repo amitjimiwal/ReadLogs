@@ -13,12 +13,15 @@ class AuthService {
     this.databases = new Databases(this.client);
   }
   async createUserEntry({ userID }: { userID: string }) {
-    //creating user entry on Signup to users collection
+    //creating user entry on Signup to users collection and social Link collection
     try {
       await this.databases.createDocument(config.databaseID, config.userCollectionID, ID.unique(), {
         userID: userID,
         isEmailReminder: false
       });
+      await this.databases.createDocument(config.databaseID, config.socialsCollectionID, ID.unique(), {
+        userID: userID,
+      })
     } catch (error) {
       console.log(error);
     }

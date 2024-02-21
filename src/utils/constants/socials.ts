@@ -1,25 +1,43 @@
-export const SOCIALS = [
+import { Github,Linkedin,Twitter,File, FileSpreadsheet,Instagram } from "lucide-react";
+export const socialsType = [
      {
-          id: "linkedin",
-          name: "LinkedIn",
+          icon: "Linkedin",
+          name: "linkedinURL",
+          view: Linkedin,
      },
      {
-          id: "twitter",
-          name: "Twitter",
+          icon: "Twitter",
+          name: "TwitterURL",
+          view: Twitter,
      },
      {
-          id: "github",
-          name: "Github",
+          icon: "Github",
+          name: "githubURL",
+          view: Github,
      },
      {
-          id: "instagram",
-          name: "Instagram",
+          icon: "Resume",
+          name: "resumeURL",
+          view: File,
+     },
+     {
+          icon: "Cover Letter",
+          name: "coverLetterURL",
+          view: FileSpreadsheet,
+     },
+     {
+          icon: "Instagram",
+          name: "instaURL",
+          view: Instagram,
      }
 ]
-export const Priority = [{
-     id: 1,
-     name: "High"
-}, {
-     id: 2,
-     name: "Low"
-}]
+
+/* src/components/socials/AddSocial.tsx
+Linkedin
+Github
+X
+Twitter
+Instagram
+File
+FileSpreadsheet
+*/

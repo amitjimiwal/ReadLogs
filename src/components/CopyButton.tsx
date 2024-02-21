@@ -25,7 +25,7 @@ const CopyButton: React.FC<Props> = ({ text }) => {
       onClick={copyToClipboard}
       className={
         "btn text-xs " +
-        `${copied ? "bg-[#00ba94] text-white" : "bg-white text-[#00ba94]"}`
+        `${copied ? "bg-[#00ba94] text-white" : "bg-transparent text-[#00ba94] px-2"}`
       }
     >
       {copied ? (

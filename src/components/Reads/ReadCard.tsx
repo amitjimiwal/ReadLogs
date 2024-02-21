@@ -1,7 +1,7 @@
 import React from "react";
 import { Read } from "@/models/read";
-import { Button } from "./ui/button";
-import CopyButton from "./CopyButton";
+import { Button } from "../ui/button";
+import CopyButton from "../CopyButton";
 import {
   Dialog,
   DialogClose,
@@ -9,10 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DialogFooter, DialogHeader } from "./ui/dialog";
-import Input from "./ui/Input";
+import { DialogFooter, DialogHeader } from "../ui/dialog";
+import Input from "../ui/Input";
 import { useForm } from "react-hook-form";
-import { Priority } from "@/utils/constants/socials";
+import { Priority } from "@/utils/constants/priority";
 interface ReadProps extends Read {
   deleteRead: (id: string) => void;
   updateRead: (
@@ -44,7 +44,7 @@ const ReadCard: React.FC<ReadProps> = ({
       ...data,
       readUrl: new URL(data.readUrl),
     };
-    updateRead(id, { readUrl: data.readUrl});
+    updateRead(id, { readUrl: data.readUrl });
   };
   return (
     <div

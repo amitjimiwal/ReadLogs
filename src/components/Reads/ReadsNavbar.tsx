@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "./ui/button";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,25 +9,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Input from "./ui/Input";
-import { Priority } from "@/utils/constants/socials";
-import { Category } from "@/utils/constants/type";
+import Input from "../ui/Input";
+import { Priority } from "@/utils/constants/priority";
 import { ReadSchema } from "@/models/read";
 import { useForm } from "react-hook-form";
-import EmailToggle from "./EmailToggle";
+import EmailToggle from "../EmailToggle";
 import dbService from "@/appwrite/dbService";
 import { Models } from "appwrite";
 import { useSelector } from "react-redux";
 import { AuthState } from "@/redux/store/store";
 import toast from "react-hot-toast";
 interface Props {
-  type: Category.READS | Category.SOCIALS;
   addRead?: (read: ReadSchema) => void;
   updateSortBy?: (sortBy: number) => void;
 }
 
 type Reads = ReadSchema;
-const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
+const ReadsNavbar: React.FC<Props> = ({ addRead, updateSortBy }) => {
   const user: Models.User<Models.Preferences> | undefined = useSelector(
     (state: AuthState) => state.auth.userData
   );
@@ -47,7 +45,6 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
     }
     reset();
   };
-  const urlRef = useRef<HTMLInputElement>(null);
   const updateEmailReminder = useCallback(
     (isEmailReminder: boolean) => {
       const documentID = emailReminder ? emailReminder.documents[0].$id : "";
@@ -73,7 +70,7 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
     <>
       <div className="w-full bg-inherit p-4 flex items-center justify-between">
         <div className="sm:text-2xl font-bold text-[#495E57] text-lg">
-          Your {type}
+          Your Reads
         </div>
         <div className="flex items-center gap-3">
           <select
@@ -100,72 +97,58 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Add Your {type}</DialogTitle>
+                <DialogTitle>Add Your Read</DialogTitle>
               </DialogHeader>
               <form onSubmit={handleSubmit(submit)}>
-                {type === Category.SOCIALS && (
-                  <>
-                    <Input
-                      type="text"
-                      label="URL"
-                      placeholder="Enter Profile URL"
-                      className=" w-full bg-transparent border-2 rounded-xl
+                <>
+                  <Input
+                    type="text"
+                    label="Title"
+                    placeholder="Enter Read Title"
+                    className=" w-full bg-transparent border-2 rounded-xl
                   border-white p-2 text-black placeholder:text-gray-700"
-                      ref={urlRef}
-                    />
-                  </>
-                )}
-                {type === Category.READS && (
-                  <>
-                    <Input
-                      type="text"
-                      label="Title"
-                      placeholder="Enter Read Title"
-                      className=" w-full bg-transparent border-2 rounded-xl
+                    {...register("title", {
+                      required: true,
+                    })}
+                  />
+                  <Input
+                    type="text"
+                    label="URL"
+                    placeholder="Enter Url"
+                    className=" w-full bg-transparent border-2 rounded-xl
                   border-white p-2 text-black placeholder:text-gray-700"
-                      {...register("title", {
-                        required: true,
-                      })}
-                    />
-                    <Input
-                      type="text"
-                      label="URL"
-                      placeholder="Enter Url"
-                      className=" w-full bg-transparent border-2 rounded-xl
-                  border-white p-2 text-black placeholder:text-gray-700"
-                      {...register("readUrl", {
-                        required: true,
-                      })}
-                    />
-                    <select
-                      id="priority"
-                      aria-label="Default select example"
-                      className=" p-2 sm:p-4 border border-gray-300 rounded-lg focus:outline-none text-gray-500 bg-white"
-                      defaultValue="0"
-                      {...register("priority", {
-                        required: true,
-                      })}
+                    {...register("readUrl", {
+                      required: true,
+                    })}
+                  />
+                  <select
+                    id="priority"
+                    aria-label="Default select example"
+                    className=" p-2 sm:p-4 border border-gray-300 rounded-lg focus:outline-none text-gray-500 bg-white"
+                    defaultValue="0"
+                    {...register("priority", {
+                      required: true,
+                    })}
+                  >
+                    <option
+                      value="0"
+                      disabled
+                      className="text-sm sm:text-lg"
+                      selected
                     >
+                      Select Priority
+                    </option>
+                    {Priority?.map((option) => (
                       <option
-                        value="0"
-                        disabled
-                        className="text-sm sm:text-lg"
-                        selected
+                        key={option.id}
+                        value={option.id}
+                        className="text-sm sm:text-lg hover:bg-heading"
                       >
-                        Select Priority
+                        {option.name}
                       </option>
-                      {Priority?.map((option) => (
-                        <option
-                          key={option.id}
-                          value={option.id}
-                          className="text-sm sm:text-lg hover:bg-heading"
-                        >
-                          {option.name}
-                        </option>
-                      ))}
-                    </select>
-                  </>
-                )}
+                    ))}
+                  </select>
+                </>
                 <DialogClose asChild>
                   <DialogFooter>
                     <Button type="submit" variant={"secondary"}>
@@ -188,4 +171,4 @@ const SecondaryNav: React.FC<Props> = ({ type, addRead, updateSortBy }) => {
   );
 };
 
-export default SecondaryNav;
+export default ReadsNavbar;

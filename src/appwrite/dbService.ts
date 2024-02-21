@@ -125,6 +125,33 @@ class DbService {
                console.log(error);
           }
      }
+     //get user socials
+     async getSocials({ userID }: { userID: string }) {
+          //get the socials of the user
+          try {
+               const socials = await this.databases.listDocuments(config.databaseID, config.socialsCollectionID, [
+                    Query.equal("userID", [userID])
+               ]);
+               return socials;
+          } catch (error) {
+               console.log(error);
+          }
+     }
+     //update socials
+     async updateSocials({ documentID, social }: {
+          documentID: string, social: {
+               name: string;
+               url: URL | string | null;
+          }
+     }) {
+          //update the socials of the user
+          try {
+               const data = await this.databases.updateDocument(config.databaseID, config.socialsCollectionID, documentID, JSON.stringify({ [social.name]: social.url }));
+               return data;
+          } catch (error) {
+               console.log(error);
+          }
+     }
 }
 
 const dbService = new DbService();
