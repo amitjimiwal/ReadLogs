@@ -7,6 +7,7 @@ import dbService from "@/appwrite/dbService";
 import LoadingSkeleton from "../LoadingSkeleton";
 import { socialsType } from "@/utils/constants/socials";
 import SocialCard from "./SocialCard";
+import toast from "react-hot-toast";
 const Social: React.FC = () => {
   const user: Models.User<Models.Preferences> | undefined = useSelector(
     (state: AuthState) => state.auth.userData
@@ -22,10 +23,12 @@ const Social: React.FC = () => {
       dbService
         .updateSocials({ documentID: socials?.documents[0].$id || "", social })
         .then(() => {
+          toast.success(`${social.name} updated successfully!`);
           setTrigger((trigger) => !trigger);
         })
         .catch((err) => {
           console.log(err);
+          toast.error("Failed to update socials");
         });
     },
     [socials?.documents]
@@ -57,7 +60,7 @@ const Social: React.FC = () => {
                   <SocialCard
                     key={social.name}
                     id={social.name}
-                    name={social.icon}
+                    name={social.name}
                     url={socials?.documents[0][social.name]}
                     updateSocials={updateSocials}
                     Icon={social.view}

@@ -32,7 +32,7 @@ export const socialsType = [
      }
 ]
 
-/* src/components/socials/AddSocial.tsx
+/* 
 Linkedin
 Github
 X
