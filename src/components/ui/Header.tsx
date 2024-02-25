@@ -26,23 +26,36 @@ const Header = () => {
           className="w-14 rounded-full shadow-md"
         />
       </div>
-      <Button
-        onClick={() => {
-          authStatus
+      <div className="flex items-center sm:gap-4">
+        <a
+          href="https://www.producthunt.com/posts/readlogs?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-readlogs"
+          target="_blank"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=441285&theme=light"
+            alt="ReadLogs - ReadLogs&#0058;&#0032;Store&#0044;&#0032;read&#0044;&#0032;and&#0032;never&#0032;miss&#0032;a&#0032;beat&#0046; | Product Hunt"
+            width="150"
+            height="54"
+          />
+        </a>
+        <Button
+          onClick={() => {
+            authStatus
+              ? location.pathname === "/reads"
+                ? navigate(`/user/${user?.name}`)
+                : navigate("/reads")
+              : navigate("/login");
+          }}
+          size={"lg"}
+        >
+          {authStatus
             ? location.pathname === "/reads"
-              ? navigate(`/user/${user?.name}`)
-              : navigate("/reads")
-            : navigate("/login");
-        }}
-        size={"lg"}
-      >
-        {authStatus
-          ? location.pathname === "/reads"
-            ? "Profile"
-            : "Dashboard"
-          : "Get Started"}{" "}
-        <MoveRight size={24} />
-      </Button>
+              ? "Profile"
+              : "Dashboard"
+            : "Get Started"}{" "}
+          <MoveRight size={24} />
+        </Button>
+      </div>
     </header>
   );
 };
