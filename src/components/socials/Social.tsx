@@ -54,6 +54,7 @@ const Social: React.FC = () => {
       ) : (
         <div className="flex items-center gap-5 flex-wrap">
           {!loading &&
+            socials?.documents && socials?.documents.length > 0 &&
             socialsType.map((social) => {
               if (socials?.documents[0][social.name] !== null) {
                 return (
